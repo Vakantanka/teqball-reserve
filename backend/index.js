@@ -66,12 +66,12 @@ const init = async () => {
     }
     console.log(place_id);  
       
-    const Group = require("./model/Group");  
-    const Member = require("./model/Member");  
-    const Participant = require("./model/Participant");  
-    const Event = require("./model/Event");  
+    const {Group} = require("./model/Group");  
+    const {Member} = require("./model/Group");  
+    const {Participant} = require("./model/Group");  
+    const {Event} = require("./model/Group");  
 
-    const memberdata = {user_id: user_id, role: "superadmin"}
+    const memberdata = {user_id: user_id, role: "admin"}
     const member = new Member(memberdata);
     const participantdata = {user_id: user_id, message: "jövök"}
     const participant = new Participant(participantdata);
@@ -80,6 +80,7 @@ const init = async () => {
       title: "Valami esemény",
       description: "A távoli jövőben",
       place_id: place_id,
+      date: '2022-08-01',
       participants: [participant]
     }
     const event = new Event(eventdata);
@@ -102,7 +103,7 @@ const init = async () => {
       group_id = existingGroup[0]._id;
     }
     console.log(group_id);      
-
+    console.log("Ready to ....");
   } catch (error) {
     console.log(error);
   }

@@ -32,6 +32,9 @@ const eventSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'place'
   },
+  date: {
+    type: Date,
+  },
   participants: {
     type: [participantSchema]
   }
@@ -56,4 +59,9 @@ const groupSchema = Schema({
   }
 })
 
-module.exports = mongoose.model("Group", groupSchema)
+const Member = mongoose.model("Member", memberSchema);
+const Participant = mongoose.model("Participant", participantSchema);
+const Event = mongoose.model("Event", eventSchema);
+const Group = mongoose.model("Group", groupSchema);
+
+module.exports = { Member: Member, Participant: Participant, Event: Event, Group: Group }

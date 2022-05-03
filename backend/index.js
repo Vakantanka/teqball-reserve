@@ -52,7 +52,10 @@ const init = async () => {
     const Place = require("./model/Place");  
     const placedata = 
       {
-        title: "Grund"
+        title: "Deák",
+        saved_by: user_id,
+        type: "Point",
+        location: [46.07547, 18.21402]
       }
     
     let place_id = "";

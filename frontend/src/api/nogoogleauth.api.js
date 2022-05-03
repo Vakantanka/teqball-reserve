@@ -142,4 +142,56 @@ const apiReset = async (elements) => {
   }
 }
 
-module.exports = { apiSignIn, apiSignUp, /*apiSignOut,*/ apiGetContent, apiFindUserByUsername, apiFindUserByEmail, apiConfirm, apiPasswordReset, apiChangePassword, apiReset }
+const apiRegisterGroup = async (elements) => {
+  const { name, description } = elements;
+  let details = {
+    name: name.value,
+    description: description.value
+  };
+  try {
+    const response = await http.post(
+      myBackEndURL + "/group/register",
+      details,
+      {
+        headers: {
+        "x-access-token": localStorage.getItem('token'),
+        },
+      }      
+    );
+    return (response);
+  } catch (error) {
+    if (!error.response) return (error);
+    return error.response;
+  }
+}
+
+const apiFindGroupByName = async (name,value) => {
+  try {
+    const object = { name: value }
+    const response = await http.post(myBackEndURL + "/group/findGroupByName",
+      object,
+      {
+        headers: {
+        "x-access-token": localStorage.getItem('token'),
+        },
+      })
+    return response.status;
+  } catch (error) {
+    if (!error.response) return (error);
+    return error.response;
+  }
+}
+
+module.exports = { 
+  apiSignIn, 
+  apiSignUp, 
+  apiGetContent, 
+  apiFindUserByUsername, 
+  apiFindUserByEmail, 
+  apiConfirm, 
+  apiPasswordReset, 
+  apiChangePassword, 
+  apiReset, 
+  apiRegisterGroup,
+  apiFindGroupByName
+}

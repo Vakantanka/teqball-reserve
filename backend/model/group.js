@@ -28,9 +28,8 @@ const eventSchema = mongoose.Schema({
   description: {
     type: String
   },
-  place_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'place'
+  place: {
+    type: String
   },
   date: {
     type: Date,

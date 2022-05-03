@@ -1,7 +1,8 @@
-const Group = require("../model/Group");
+const {Group} = require("../model/Group");
 
 const getGroupByData = async (option) => {
   try {
+    console.log(option);
     const existingGroup = await Group.find(option);
     return existingGroup;
   } catch (error) {

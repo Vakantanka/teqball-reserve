@@ -14,6 +14,9 @@ const Header = ({ signOut, loggedIn }) => {
               <li>
                 <Link to="/" className="link" onClick={signOut}>Sign Out</Link>
               </li>
+              <li>
+                <Link to="/groups" className="link">Groups</Link>
+              </li>
             </>
           ) : (
             <>

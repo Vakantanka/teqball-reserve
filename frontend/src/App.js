@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Confirm from './components/Confirm';
 import PasswordReset from './components/PasswordReset';
 import Reset from './components/Reset';
+import Group from './components/Group';
 
 // import { apiSignOut } from './api/nogoogleauth.api';
 import Message from './components/Message';
@@ -32,6 +33,12 @@ function App() {
         <Routes>
           <Route path="/" element={
             <Homepage 
+              loggedIn={loggedIn} 
+              setStatus={setStatus}
+            />}
+          />
+          <Route path="/groups" element={
+            <Group 
               loggedIn={loggedIn} 
               setStatus={setStatus}
             />}

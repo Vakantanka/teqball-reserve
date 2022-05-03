@@ -10,8 +10,10 @@ const mongoose = require('mongoose');
 
 const userRoutes = require('./route/user');
 const contentRoutes = require('./route/content');
+const groupRoutes = require('./route/group');
 app.use('/api', contentRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/group', groupRoutes);
 
 const init = async () => {
   const Content = require("./model/Content");  
@@ -49,26 +51,6 @@ const init = async () => {
     }
     console.log(user_id);
 
-    const Place = require("./model/Place");  
-    const placedata = 
-      {
-        title: "Deák",
-        saved_by: user_id,
-        type: "Point",
-        location: [46.07547, 18.21402]
-      }
-    
-    let place_id = "";
-    const existingPlace = await Place.find({title: placedata.title});
-    if (existingPlace.length === 0) {
-      const place = new Place(placedata);
-      const newPlace = await place.save();
-      place_id = newPlace._id;          
-    } else {
-      place_id = existingPlace[0]._id;
-    }
-    console.log(place_id);  
-      
     const {Group} = require("./model/Group");  
     const {Member} = require("./model/Group");  
     const {Participant} = require("./model/Group");  
@@ -81,8 +63,8 @@ const init = async () => {
 
     const eventdata = {
       title: "Valami esemény",
-      description: "A távoli jövőben",
-      place_id: place_id,
+      description: "Ami valahol történik.",
+      place: "Messzi, messzi egy távoli galaxisban ...",
       date: '2022-08-01',
       participants: [participant]
     }

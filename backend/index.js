@@ -8,8 +8,6 @@ app.use(express.json())
 
 const mongoose = require('mongoose');
 
-// mySessionStorage = {};
-
 const userRoutes = require('./route/user');
 const contentRoutes = require('./route/content');
 app.use('/api', contentRoutes);
@@ -31,7 +29,7 @@ const init = async () => {
 
     const User = require("./model/User");  
 
-    const placeholder = [
+    const userdata = 
       {
         name: "Nagyot Fingó Bika",
         username: "BigFartEngine",
@@ -39,16 +37,72 @@ const init = async () => {
         password: "asdasd",
         verified: true
       }
-    ]
-    const existingUsers = await Promise.all(placeholder.map((item) => User.find({username: item.username})));
-  
-    const newUsers = await Promise.all(existingUsers.map((existingUser, index) => {
-      if (existingUser.length === 0) {
-        const user = new User(placeholder[index]);
-        user.save().then(() => console.log("Saved."))          
+    
+    let user_id = "";
+    const existingUser = await User.find({username: userdata.username});
+    if (existingUser.length === 0) {
+      const user = new User(userdata);
+      const newUser = await user.save();
+      user_id = newUser._id;          
+    } else {
+      user_id = existingUser[0]._id;
+    }
+    console.log(user_id);
+
+    const Place = require("./model/Place");  
+    const placedata = 
+      {
+        title: "Grund"
       }
-    }));
+    
+    let place_id = "";
+    const existingPlace = await Place.find({title: placedata.title});
+    if (existingPlace.length === 0) {
+      const place = new Place(placedata);
+      const newPlace = await place.save();
+      place_id = newPlace._id;          
+    } else {
+      place_id = existingPlace[0]._id;
+    }
+    console.log(place_id);  
       
+    const Group = require("./model/Group");  
+    const Member = require("./model/Member");  
+    const Participant = require("./model/Participant");  
+    const Event = require("./model/Event");  
+
+    const memberdata = {user_id: user_id, role: "superadmin"}
+    const member = new Member(memberdata);
+    const participantdata = {user_id: user_id, message: "jövök"}
+    const participant = new Participant(participantdata);
+
+    const eventdata = {
+      title: "Valami esemény",
+      description: "A távoli jövőben",
+      place_id: place_id,
+      participants: [participant]
+    }
+    const event = new Event(eventdata);
+
+    const groupdata = 
+      {
+        name: "FF teqball team",
+        description: "Fortissima Fingus baráti köre",
+        owner: user_id,
+        members: [member],
+        events: [event]
+      }
+    let group_id = "";
+    const existingGroup = await Group.find({name: groupdata.name});
+    if (existingGroup.length === 0) {
+      const group = new Group(groupdata);
+      const newGroup = await group.save();
+      group_id = newGroup._id;          
+    } else {
+      group_id = existingGroup[0]._id;
+    }
+    console.log(group_id);      
+
   } catch (error) {
     console.log(error);
   }

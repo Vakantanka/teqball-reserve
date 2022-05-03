@@ -3,11 +3,6 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const roleSchema = mongoose.Schema({
-   "group": "String",
-   "role": "String"
-});
-
 const userSchema = Schema({
   "name": {
     "type": "String"
@@ -24,8 +19,7 @@ const userSchema = Schema({
   "verified": {
     "type": "Boolean",
     "default": "false"
-  },
-  "roles": [rolSchema]
+  }
 })
 
 userSchema.pre('save', function(next) {

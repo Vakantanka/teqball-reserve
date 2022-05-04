@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { apiRegisterGroup, apiFindGroupByName } from '../api/nogoogleauth.api';
+import { apiRegisterGroup, apiFindGroupByName, apiGroupList } from '../api/nogoogleauth.api';
 
-const CreateGroup = ({setStatus}) => {
+const Group = ({setStatus}) => {
+  const [groups, setGroups] = useState(false);
   const [sendStatus, setSendStatus] = useState(false);
   const [created, setCreated] = useState(false);
   
@@ -78,6 +79,10 @@ const CreateGroup = ({setStatus}) => {
     }
   }
 
+  useEffect(() => {
+    setGroups(apiGroupList());
+  }, []);
+
   return (
     <>
     { created ?
@@ -104,4 +109,4 @@ const CreateGroup = ({setStatus}) => {
   );
 };
 
-export default CreateGroup;
+export default Group;

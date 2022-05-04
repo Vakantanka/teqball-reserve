@@ -182,6 +182,22 @@ const apiFindGroupByName = async (name,value) => {
   }
 }
 
+const apiGroupList = async () => {
+  try {
+    const response = await http.post(myBackEndURL + "/group/list",
+      {},
+      {
+        headers: {
+        "x-access-token": localStorage.getItem('token'),
+        },
+      })
+    return response.data;
+  } catch (error) {
+    if (!error.response) return (error);
+    return error.response;
+  }
+}
+
 module.exports = { 
   apiSignIn, 
   apiSignUp, 
@@ -193,5 +209,6 @@ module.exports = {
   apiChangePassword, 
   apiReset, 
   apiRegisterGroup,
-  apiFindGroupByName
+  apiFindGroupByName,
+  apiGroupList
 }
